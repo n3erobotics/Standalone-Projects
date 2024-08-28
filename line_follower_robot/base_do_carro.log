@@ -1,0 +1,31 @@
+Solid Edge Translation to STEP
+Date: Wednesday,August 28,2024 04:46PM
+Output File: C:\Users\guilh\OneDrive\Documentos\GitHub\Standalone-Projects\line_follower_robot\base_do_carro.stp
+Author: Unknown
+Organization: Unknown
+Source System: Solid Edge
+
+Hardware:
+Processor: AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     
+Operating System: Windows 11 Version:23H2 Build:22631 System Type:64-bit
+Installed Memory: 15.28 GB
+
+Software Information
+Parasolid Version: 36.0.142
+PSBodyShop Version: 36.0.108
+Step Adapter Version: 13.0.163
+Solid Edge Version: 224.00.00.101 x64
+
+STEP Export Options
+Export Format: AP214
+Export Construction Sheets: Off
+Export Construction Solids: Off
+Export Construction Wires: Off
+Export Displayed Parts Only: Off
+Export Units: Millimeters
+Export Part Component Names As Unicode: Off
+Export PMI: Off
+
+Phase 1 of 1 Translating Parasolid to foreign data types...
+Translation process completed
+Time required to translate:00 : 00 : 00
