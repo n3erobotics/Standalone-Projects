@@ -11,18 +11,13 @@ int IR2 = A2;
 int IR3 = A3;
 int IR4 = A4;
 int IR5 = A5;
-int pinMotorESQ=6;
-int pinMotorDIR=5;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(pinMotorDIR,OUTPUT);
-  pinMode(pinMotorESQ,OUTPUT);
 }
 
 void loop() {
-  andar();
-  /*float value = get_readings();
+  float value = get_readings();
   
   if(-10.0 <= value && value <= 10.0)
   {
@@ -41,10 +36,11 @@ void loop() {
     Serial.println("Opsie");
   }
 
-  delay(1500);*/
+  delay(2000);
 }
 
 int get_readings() {
+
   int IR1_readings[N_READINGS];
   int IR2_readings[N_READINGS];
   int IR3_readings[N_READINGS];
@@ -71,19 +67,4 @@ int get_readings() {
   }
 
   return sum_of_averages/N_READINGS;
-}
-
-//funcao para no inicio andar para a frente
-void andar(){
-  for(int i=0; i<255;i++){
-    analogWrite(pinMotorESQ, i);
-    analogWrite(pinMotorDIR, i);
-    delay(5);
-  }
-  delay(100);
-  for(int i=255; i>0;i--){
-    analogWrite(pinMotorESQ, i);
-    analogWrite(pinMotorDIR, i);
-    delay(5);
-  }
 }
