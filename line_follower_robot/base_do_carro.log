@@ -1,5 +1,5 @@
 Solid Edge Translation to STEP
-Date: Thursday,August 29,2024 12:16PM
+Date: Thursday,August 29,2024 12:17PM
 Output File: C:\Users\guilh\OneDrive\Documentos\GitHub\Standalone-Projects\line_follower_robot\base_do_carro.stp
 Author: Unknown
 Organization: Unknown
@@ -28,4 +28,4 @@ Export PMI: Off
 
 Phase 1 of 1 Translating Parasolid to foreign data types...
 Translation process completed
-Time required to translate:00 : 00 : 01
+Time required to translate:00 : 00 : 00
