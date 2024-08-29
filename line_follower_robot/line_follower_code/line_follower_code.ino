@@ -97,11 +97,11 @@ void follow_line(float value) {
   lasterror = error;
 
   float Kp = 0.08;
-  //float Kd = 0.2;
+  float Kd = 0.05;
   int adjustment = 0;
   
   
-  adjustment = P * Kp; //+ D * Kd ; // Adjust for speed
+  adjustment = P * Kp + D * Kd ; // Adjust for speed
 
   if(adjustment + base_speed > 125){
     adjustment = 125;
@@ -111,14 +111,14 @@ void follow_line(float value) {
   int right_speed = base_speed + adjustment;
 
   // Clamp motor speeds to ensure they are within valid PWM range
-  left_speed = constrain(left_speed, 0, 255);
-  right_speed = constrain(right_speed, 0, 255);
+  left_speed = constrain(left_speed, 0, 125);
+  right_speed = constrain(right_speed, 0, 125);
 
   analogWrite(enableE, left_speed);
   analogWrite(enableD, right_speed);
 
 
-  delay(2000);
+  //delay(2000);
   //Serial.print("Left Speed: ");
   //Serial.print(left_speed);
   //Serial.print(" | Right Speed: ");
