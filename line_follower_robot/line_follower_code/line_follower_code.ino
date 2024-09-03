@@ -15,14 +15,16 @@ int IR3 = A3;
 int IR4 = A4;
 int IR5 = A5;
 
-int led_L = 13
+int led_L = 13;
 
 int P = 0;
 int D = 0;
 int lasterror = 0;
 
-int min_value = 2000;
-int max_value = 0;
+long int min_value = 2000;
+long int max_value = 0;
+long int zero = 0;
+long int max = 1000;
 
 int max_speed = 110;
 int min_speed = 40;
@@ -94,14 +96,14 @@ int get_readings() {
   return sum_of_averages/N_READINGS;
 }
 
-void follow_line(float value) {
+void follow_line(long int value) {
   int base_speed = 80;  // Base speed for the motors
   int error = value;  //  Error is the value from the sensor 
   P = error;      //   Proportional is the value of error (present)
   D = error - lasterror; // Derivative is error - lasterror prevent big modifications (future)
   lasterror = error;
 
-  value = map(min_value, max_value, 0 , 1000  );
+  value = map(value, min_value, max_value, zero , max);
 
   float Kp = 0.65;
   float Kd = 0.5;
@@ -125,7 +127,7 @@ void follow_line(float value) {
 
 void calibrate(){
   float value = 0;
-  int N = 500;
+  int N = 1000;
 
   digitalWrite(led_L, HIGH);
 
@@ -137,8 +139,9 @@ void calibrate(){
     }
 
     if(min_value > value){
-      min_value = value
+      min_value = value;
     }
+    delay(2);
   }
 
   digitalWrite(led_L, LOW);
