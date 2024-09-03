@@ -1,15 +1,13 @@
 //  TOP SPEED MÁXIMA = 125 MOTORES DE 6V
-// FALTA BRINCAR COM O PID E METER OS FIOS DOS DOIS MOTORES DO MESMO TAMANHO
-
 
 
 #define N_READINGS 5
 
-#define WEIGHT_1 -2
-#define WEIGHT_2 -1
-#define WEIGHT_3  0
-#define WEIGHT_4  1
-#define WEIGHT_5  2
+#define WEIGHT_1 0
+#define WEIGHT_2 1
+#define WEIGHT_3 2
+#define WEIGHT_4 3
+#define WEIGHT_5 4
 
 int IR1 = A1;
 int IR2 = A2;
@@ -17,12 +15,17 @@ int IR3 = A3;
 int IR4 = A4;
 int IR5 = A5;
 
+int led_L = 13
+
 int P = 0;
 int D = 0;
 int lasterror = 0;
 
-int centro = 0;
+int min_value = 2000;
+int max_value = 0;
 
+int max_speed = 110;
+int min_speed = 40;
 
 int pinMotorESQ1 = 5;
 int pinMotorESQ2 = 6;
@@ -41,9 +44,10 @@ void setup() {
   pinMode(pinMotorESQ2, OUTPUT);
   pinMode(enableD, OUTPUT);
   pinMode(enableE, OUTPUT);
+  pinMode(led_L, OUTPUT);
 
   calibrate();
-  delay(1000);
+  delay(2000);
   analogWrite(enableD, 80);
   analogWrite(enableE, 80);
 
@@ -54,9 +58,10 @@ void setup() {
 }
 
 void loop() {
+
   float value = get_readings();
   follow_line(value);
-  delay(150);
+
 }
 
 int get_readings() {
@@ -91,56 +96,52 @@ int get_readings() {
 
 void follow_line(float value) {
   int base_speed = 80;  // Base speed for the motors
-  int error = value-centro;  //  Error is the value from the sensor 
+  int error = value;  //  Error is the value from the sensor 
   P = error;      //   Proportional is the value of error (present)
   D = error - lasterror; // Derivative is error - lasterror prevent big modifications (future)
   lasterror = error;
 
-  float Kp = 0.08;
-  float Kd = 0.05;
+  value = map(min_value, max_value, 0 , 1000  );
+
+  float Kp = 0.65;
+  float Kd = 0.5;
   int adjustment = 0;
   
   
   adjustment = P * Kp + D * Kd ; // Adjust for speed
-
-  if(adjustment + base_speed > 125){
-    adjustment = 125;
-  }
   
   int left_speed = base_speed - adjustment;
   int right_speed = base_speed + adjustment;
 
   // Clamp motor speeds to ensure they are within valid PWM range
-  left_speed = constrain(left_speed, 0, 125);
-  right_speed = constrain(right_speed, 0, 125);
+  left_speed = constrain(left_speed, min_speed, max_speed);
+  right_speed = constrain(right_speed, min_speed, max_speed);
 
   analogWrite(enableE, left_speed);
   analogWrite(enableD, right_speed);
 
-
-  //delay(2000);
-  //Serial.print("Left Speed: ");
-  //Serial.print(left_speed);
-  //Serial.print(" | Right Speed: ");
-  //Serial.print(right_speed);
-  //Serial.print(" | Value: ");
-  //Serial.println(value);
-
-  Serial.println("error = " + String(error) );
-  Serial.println("P = " + String(P) );
-  Serial.println("D = " + String(D) );
-  Serial.println(" PID adjustment: " + String(adjustment));
 }
 
 
 void calibrate(){
-  float sum_of_averages = 0;
-  int N = 200;
+  float value = 0;
+  int N = 500;
+
+  digitalWrite(led_L, HIGH);
+
   for(int i = 0; i < N; i++) 
   {
-    sum_of_averages += get_readings();
+    value = get_readings();
+    if(max_value < value ){
+      max_value = value;
+    }
+
+    if(min_value > value){
+      min_value = value
+    }
   }
 
-  centro = sum_of_averages/N;
+  digitalWrite(led_L, LOW);
+
 }
 
