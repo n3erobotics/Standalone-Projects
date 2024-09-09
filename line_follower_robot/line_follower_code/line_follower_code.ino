@@ -127,7 +127,7 @@ void follow_line(long int value) {
 
 void calibrate(){
   float value = 0;
-  int N = 1000;
+  int N = 3000;
 
   digitalWrite(led_L, HIGH);
 
