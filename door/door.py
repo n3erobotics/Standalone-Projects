@@ -108,8 +108,8 @@ def escrever_numeros(nome_arquivo):
 
 # Define os nomes dos arquivo
 nome_arquivo='numero.txt'
-save_cartoes = 571359383393
-
+save_cartoes = 346147891815
+save_cartoes2 = 3382435468
 
 # Inicializa o leitor RFID
 reader=SimpleMFRC522()
@@ -129,10 +129,12 @@ try:
             print("o numero esta na lista")
             Flag = rotate(Flag)
 
-        if (numero_procurado == save_cartoes):
-            time.sleep(1000)
+        if (numero_procurado == save_cartoes or numero_procurado == save_cartoes2):
+            time.sleep(1)
             GPIO.output( Pin_IN1, GPIO.HIGH  )
+            print("introduza novo cartao")
             escrever_numeros(nome_arquivo)
+            GPIO.output( Pin_IN1, GPIO.LOW)
         time.sleep(1)
 
  
