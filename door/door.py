@@ -1,6 +1,8 @@
 import time
 from mfrc522 import SimpleMFRC522
 import RPi.GPIO as GPIO
+import os
+from datetime import datetime
 
 Pin_Step = 6    #pin do step do driver do stepper
 Pin_Dir = 19    #pin da direção do stepper
@@ -104,12 +106,21 @@ def escrever_numeros(nome_arquivo):
 
     except FileNotFoundError:
         print(f"O arquivo '{nome_arquivo}' não foi encontrado.")
+
+
+
+def reboot_pi():
+        
+    print("rebooting")
+    os.system("sudo reboot")  
+
      
 
 # Define os nomes dos arquivo
 nome_arquivo='numero.txt'
 save_cartoes = 346147891815
 save_cartoes2 = 3382435468
+reboot_time = "00:00"
 
 # Inicializa o leitor RFID
 reader=SimpleMFRC522()
@@ -124,6 +135,11 @@ try:
         print('ID= ', id)
         numero_procurado = id
         print(id)
+
+        Real_time = datetime.now().strftime("%H:%M")
+
+        if Real_time == reboot_time:
+            reboot_pi()
         
         if numero_procurado in numero:
             print("o numero esta na lista")
